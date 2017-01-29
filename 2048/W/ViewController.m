@@ -45,25 +45,18 @@
         [[_gameB objectAtIndex:row] replaceObjectAtIndex:col withObject: [NSNumber numberWithInt:value]];
     }
     
-  //  int a = [_gameB[1][1] intValue];
-  //  int b = [_gameB[2][3] intValue];
-  //  int c = a + b + 4;
-    
-    //NSInteger a = _gameB[2][3];
-    //NSInteger b = _gameB[4][5];
-    //NSInteger c = [[NSNumber alloc]initWithInt: (a+b)];
-   // c = a + b + 4;
-    //[[_gameB objectAtIndex:0] replaceObjectAtIndex:1 withObject: [NSNumber numberWithInt:c]];
-    
-    for(int i=0;i<4;i++){
-                    NSLog(@"%@ %@ %@ %@" , _gameB[i][0],_gameB[i][1],_gameB[i][2],_gameB[i][3] );
-        NSLog(@"\n");
-    }
-    
     NSLog(@"DONE***********");
     
     
     
+}
+
+- (IBAction)print:(id)sender {
+    [self printArray];
+}
+
+- (IBAction)add:(id)sender {
+    [self addNewNumbers];
 }
 
 -(int) randomCol{
@@ -116,31 +109,204 @@
        return NO;
         
 }
-
-
-
-- (IBAction)upButton:(id)sender {
-    if([self endGame]){
-        NSLog(@"TRUE");
-        for(int i = 0 ; i< 4; i++){
-            for(int j = 0 ; j<4; j++){
-        //        if(gameB[i][j] == gameB[i][j] ){
-          //          gameB[i][j] = gameB [1][2] + gameB[1][2];
-           //     }
+-(void)addNewNumbers{
+   
+    NSMutableArray * emptySpacesX = [[NSMutableArray alloc] init];
+    NSMutableArray * emptySpacesY = [[NSMutableArray alloc] init];
+    
+    for(int i=0;i<4;i ++){
+        for(int j=0;j<4;j++){
+            NSString * checker = [NSString stringWithFormat:@"%@" , _gameB[i][j]];
+            if([checker isEqualToString:@"0"]){
+                [emptySpacesX addObject:[NSNumber numberWithInt:i]];
+                [emptySpacesY addObject:[NSNumber numberWithInt:j]];
             }
         }
-        
     }
+    int choice = arc4random_uniform((uint32_t)[emptySpacesX count]);
+    NSLog(@"Choice : %d" , choice);
+    int x = [[emptySpacesX objectAtIndex:choice] intValue];
+    int y = [[emptySpacesY objectAtIndex:choice] intValue];
+    NSLog(@"%d %d" , x,y);
+    [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:[self randomValue]]];
     
-    else
-        NSLog(@"False");
 }
 
-- (IBAction)rightButton:(id)sender {
+-(void)printArray{
+    for(int i=0;i<4;i++){
+        NSLog(@"%@ %@ %@ %@" , _gameB[i][0],_gameB[i][1],_gameB[i][2],_gameB[i][3] );
+        NSLog(@"\n");
+    }
+    
+    NSLog(@"DONE***********");
 }
+- (IBAction)upButton:(id)sender {
+    BOOL alreadyCombined[4] = {NO,NO,NO,NO};
+    NSLog(@"Push Up Now");
+   // [self addNewNumbers];
+    
+    for(int y = 0; y<4 ; y++){
+        for(int x = 1 ; x<4 ; x++){
+            if([_gameB[x][y] intValue] !=0){
+                int a = [[[_gameB objectAtIndex:x] objectAtIndex:y] intValue];
+                int mover = x-1;
+                while((mover>=0) && [_gameB[mover][y] intValue] ==0){
+                    mover--;
+                }
+                if(mover == -1){
+                    [[_gameB objectAtIndex:0] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:a]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                    
+                }
+                else if (([_gameB[mover][y] intValue] !=a) && mover+1 != x){
+                    [[_gameB objectAtIndex:(mover+1)] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:a]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                }
+                else if([_gameB[mover][y] intValue] == a){
+                    if(alreadyCombined[mover]){
+                        [[_gameB objectAtIndex:(mover+1)] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:a]];
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                    }
+                    else{
+                        [[_gameB objectAtIndex:mover] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:[[[_gameB objectAtIndex:mover] objectAtIndex:y] intValue]*2]];
+                        alreadyCombined[mover] = NO;
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
+                        
+                    }
+                   
+                }
+            }
+        }
+    }
+
+    
+ //[self printArray];
+    
+}
+
 - (IBAction)downButton:(id)sender {
+    NSLog(@"Push Down Now");
+    // [self addNewNumbers];
+    BOOL alreadyCombined[4] = {NO,NO,NO,NO};
+    for(int y = 0; y<4 ; y++){
+        for(int x = 2 ; x > -1 ; x--){
+            if([_gameB[x][y] intValue] !=0){
+                int a = [[[_gameB objectAtIndex:x] objectAtIndex:y] intValue];
+                int mover = x + 1;
+                while((mover<=3) && [_gameB[mover][y] intValue] ==0){
+                    mover++;
+                }
+                if(mover == 4){
+                    [[_gameB objectAtIndex:3] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:a]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                    
+                }
+                else if (([_gameB[mover][y] intValue] !=a) && mover-1 != x){
+                    [[_gameB objectAtIndex:(mover-1)] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:a]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                }
+                else if([_gameB[mover][y] intValue] == a){
+                    if(alreadyCombined[mover]){
+                        [[_gameB objectAtIndex:(mover-1)] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:a]];
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                        
+                    }
+                    else{
+                        [[_gameB objectAtIndex:mover] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:[[[_gameB objectAtIndex:mover] objectAtIndex:y] intValue]*2]];
+                        alreadyCombined[mover]= YES;
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
+                        
+                        
+                    }
+                }
+            }
+        }
+    }
+
 }
+
+
+- (IBAction)rightButton:(id)sender {
+    
+    NSLog(@"Push Right Now");
+    BOOL alreadyCombined[4] = {NO,NO,NO,NO};
+    for(int x = 0; x<4 ; x++){
+        for(int y = 3 ; y>-1  ; y-- ){
+            if([_gameB[x][y] intValue] !=0){
+                int a = [[[_gameB objectAtIndex:x] objectAtIndex:y] intValue];
+                int mover = y + 1;
+                while((mover<=3) && [_gameB[x][mover] intValue] ==0){
+                    mover++;
+                }
+                if(mover == 4){
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:3 withObject: [NSNumber numberWithInt:a]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                    
+                }
+                else if (([_gameB[x][mover] intValue] !=a) && mover-1 != y){
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:(mover-1) withObject: [NSNumber numberWithInt:a]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                }
+                else if([_gameB[x][mover] intValue] == a){
+                    if(alreadyCombined[mover]){
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:(mover-1) withObject: [NSNumber numberWithInt:a]];
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                        
+                    }
+                    else{
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:mover withObject: [NSNumber numberWithInt:[[[_gameB objectAtIndex:x] objectAtIndex:mover] intValue]*2]];
+                        alreadyCombined[mover]= YES;
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
+                        
+                        
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
 - (IBAction)leftButton:(id)sender {
+    NSLog(@"Push Left Now");
+    // [self addNewNumbers];
+    BOOL alreadyCombined[4] = {NO,NO,NO,NO};
+    for(int x = 0; x<4 ; x++){
+        for(int y = 0 ; y<4 ; y++ ){
+            if([_gameB[x][y] intValue] !=0){
+                int a = [[[_gameB objectAtIndex:x] objectAtIndex:y] intValue];
+                int mover = y - 1;
+                while((mover>=0) && [_gameB[x][mover] intValue] ==0){
+                    mover--;
+                }
+                if(mover == -1){
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:0 withObject: [NSNumber numberWithInt:a]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                    
+                }
+                else if (([_gameB[x][mover] intValue] !=a) && mover-1 != y){
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:(mover+1) withObject: [NSNumber numberWithInt:a]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                }
+                else if([_gameB[x][mover] intValue] == a){
+                    if(alreadyCombined[mover]){
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:(mover+1) withObject: [NSNumber numberWithInt:a]];
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                        
+                    }
+                    else{
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:mover withObject: [NSNumber numberWithInt:[[[_gameB objectAtIndex:x] objectAtIndex:mover] intValue]*2]];
+                        alreadyCombined[mover]= YES;
+                        [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
+                        
+                        
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 

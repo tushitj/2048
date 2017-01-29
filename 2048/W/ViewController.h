@@ -10,7 +10,9 @@
 
 @interface ViewController : UIViewController
 - (IBAction)startGme:(id)sender;
+- (IBAction)print:(id)sender;
 
+- (IBAction)add:(id)sender;
 -(BOOL)movePossible;
 -(BOOL)endGame;
 @end

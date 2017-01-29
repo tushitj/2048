@@ -42,7 +42,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Right"/>
                                 <connections>
-                                    <action selector="rightButton:" destination="BYZ-38-t0r" eventType="touchDragInside" id="7OL-JC-SpX"/>
+                                    <action selector="rightButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WHu-KI-phH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bt-DN-u6X">

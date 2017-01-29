@@ -239,13 +239,15 @@
                     mover++;
                 }
                 if(mover == 4){
-                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:3 withObject: [NSNumber numberWithInt:a]];
                     [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:3 withObject: [NSNumber numberWithInt:a]];
+                    
                     
                 }
                 else if (([_gameB[x][mover] intValue] !=a) && mover-1 != y){
-                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:(mover-1) withObject: [NSNumber numberWithInt:a]];
                     [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:(mover-1) withObject: [NSNumber numberWithInt:a]];
+                    
                 }
                 else if([_gameB[x][mover] intValue] == a){
                     if(alreadyCombined[mover]){
@@ -265,9 +267,6 @@
         }
     }
 }
-
-
-
 - (IBAction)leftButton:(id)sender {
     NSLog(@"Push Left Now");
     // [self addNewNumbers];
@@ -281,13 +280,15 @@
                     mover--;
                 }
                 if(mover == -1){
-                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:0 withObject: [NSNumber numberWithInt:a]];
                     [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:0 withObject: [NSNumber numberWithInt:a]];
+                    
                     
                 }
                 else if (([_gameB[x][mover] intValue] !=a) && mover-1 != y){
-                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:(mover+1) withObject: [NSNumber numberWithInt:a]];
                     [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:0]];
+                    [[_gameB objectAtIndex:x] replaceObjectAtIndex:(mover+1) withObject: [NSNumber numberWithInt:a]];
+                    
                 }
                 else if([_gameB[x][mover] intValue] == a){
                     if(alreadyCombined[mover]){

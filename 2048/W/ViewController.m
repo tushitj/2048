@@ -23,6 +23,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
+    //[self add setHidden:true];
+    //[_arrayOfLabels setHidden:true];
+   // [self arrayOfLabels hidden:YES];
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -43,11 +48,12 @@
         int col = [self randomCol];
         int value = [self randomValue];
         [[_gameB objectAtIndex:row] replaceObjectAtIndex:col withObject: [NSNumber numberWithInt:value]];
+    
     }
     
     NSLog(@"DONE***********");
     
-    
+    [self updateLabel];
     
 }
 
@@ -129,6 +135,7 @@
     int y = [[emptySpacesY objectAtIndex:choice] intValue];
     NSLog(@"%d %d" , x,y);
     [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:[self randomValue]]];
+    [self updateLabel];
     
 }
 
@@ -181,6 +188,7 @@
 
     
  //[self printArray];
+    [self updateLabel];
     
 }
 
@@ -222,7 +230,7 @@
             }
         }
     }
-
+[self updateLabel];
 }
 
 
@@ -266,6 +274,7 @@
             }
         }
     }
+    [self updateLabel];
 }
 - (IBAction)leftButton:(id)sender {
     NSLog(@"Push Left Now");
@@ -307,12 +316,24 @@
             }
         }
     }
+    [self updateLabel];
 
 }
 
 
 
+-(void)updateLabel{
+    int index = 0;
+    for(int  i = 0; i<4 ; i++){
+        for(int j=0;j<4;j++){
+            UILabel *label = (UILabel*)[self.arrayOfLabels objectAtIndex:index];
+            int value = [_gameB[i][j] intValue];
+            [label setText:[NSString stringWithFormat:@"%d", value]];
+            index++;
+        }
+    }
 
+}
 
 
 @end

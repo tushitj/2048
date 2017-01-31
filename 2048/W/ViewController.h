@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
+@property(retain,nonatomic)IBOutletCollection(UILabel) NSArray * arrayOfLabels;
 - (IBAction)startGme:(id)sender;
 - (IBAction)print:(id)sender;
 

@@ -13,6 +13,7 @@
 		17499A321E3AAB0E001D957D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17499A311E3AAB0E001D957D /* Assets.xcassets */; };
 		17499A351E3AAB0E001D957D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17499A331E3AAB0E001D957D /* LaunchScreen.storyboard */; };
 		177FB23E1E3AC8D800C45680 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 177FB23D1E3AC8D800C45680 /* Main.storyboard */; };
+		178EFA381E47AE6F009A0AD0 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 178EFA371E47AE6F009A0AD0 /* StartViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		17499A341E3AAB0E001D957D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17499A361E3AAB0E001D957D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		177FB23D1E3AC8D800C45680 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		178EFA361E47AE6F009A0AD0 /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
+		178EFA371E47AE6F009A0AD0 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +68,8 @@
 				177FB23D1E3AC8D800C45680 /* Main.storyboard */,
 				17499A311E3AAB0E001D957D /* Assets.xcassets */,
 				17499A331E3AAB0E001D957D /* LaunchScreen.storyboard */,
+				178EFA361E47AE6F009A0AD0 /* StartViewController.h */,
+				178EFA371E47AE6F009A0AD0 /* StartViewController.m */,
 				17499A361E3AAB0E001D957D /* Info.plist */,
 				17499A251E3AAB0E001D957D /* Supporting Files */,
 			);
@@ -152,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17499A2D1E3AAB0E001D957D /* ViewController.m in Sources */,
+				178EFA381E47AE6F009A0AD0 /* StartViewController.m in Sources */,
 				17499A2A1E3AAB0E001D957D /* AppDelegate.m in Sources */,
 				17499A271E3AAB0E001D957D /* main.m in Sources */,
 			);

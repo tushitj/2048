@@ -14,15 +14,34 @@
 @property (nonatomic,strong) NSMutableArray * row2;
 @property (nonatomic,strong) NSMutableArray * row3;
 @property (nonatomic,strong) NSMutableArray * row4;
-
+@property (weak, nonatomic) IBOutlet UILabel * scoreLabel;
 - (IBAction)startGme:(id)sender;
 - (BOOL) isEmpty;
 @end
 
 @implementation ViewController
-
+int score;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _row1 = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
+    _row2 = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
+    _row3 = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
+    _row4 = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
+    
+    _gameB = [[NSMutableArray alloc] initWithObjects :_row1 , _row2 ,_row3 , _row4 ,nil];
+    for(int i=0;i<2;i++){
+        int row = [self randomRow];
+        int col = [self randomCol];
+        int value = [self randomValue];
+        [[_gameB objectAtIndex:row] replaceObjectAtIndex:col withObject: [NSNumber numberWithInt:value]];
+        
+    }
+    
+    NSLog(@"DONE***********");
+    
+    [self updateLabel];
+
    
     //[self add setHidden:true];
     //[_arrayOfLabels setHidden:true];
@@ -147,6 +166,8 @@
     
     NSLog(@"DONE***********");
 }
+
+
 - (IBAction)upButton:(id)sender {
     BOOL alreadyCombined[4] = {NO,NO,NO,NO};
     NSLog(@"Push Up Now");
@@ -176,6 +197,7 @@
                     }
                     else{
                         [[_gameB objectAtIndex:mover] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:[[[_gameB objectAtIndex:mover] objectAtIndex:y] intValue]*2]];
+                         score = score+4;
                         alreadyCombined[mover] = NO;
                         [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
                         
@@ -188,6 +210,8 @@
 
     
  //[self printArray];
+    score++;
+    [self addNewNumbers];
     [self updateLabel];
     
 }
@@ -221,6 +245,7 @@
                     }
                     else{
                         [[_gameB objectAtIndex:mover] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:[[[_gameB objectAtIndex:mover] objectAtIndex:y] intValue]*2]];
+                        score = score+4;
                         alreadyCombined[mover]= YES;
                         [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
                         
@@ -230,6 +255,8 @@
             }
         }
     }
+    score++;
+    [self addNewNumbers];
 [self updateLabel];
 }
 
@@ -265,6 +292,7 @@
                     }
                     else{
                         [[_gameB objectAtIndex:x] replaceObjectAtIndex:mover withObject: [NSNumber numberWithInt:[[[_gameB objectAtIndex:x] objectAtIndex:mover] intValue]*2]];
+                        score = score+4;
                         alreadyCombined[mover]= YES;
                         [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
                         
@@ -274,6 +302,8 @@
             }
         }
     }
+    score++;
+    [self addNewNumbers];
     [self updateLabel];
 }
 - (IBAction)leftButton:(id)sender {
@@ -307,6 +337,7 @@
                     }
                     else{
                         [[_gameB objectAtIndex:x] replaceObjectAtIndex:mover withObject: [NSNumber numberWithInt:[[[_gameB objectAtIndex:x] objectAtIndex:mover] intValue]*2]];
+                        score = score+4;
                         alreadyCombined[mover]= YES;
                         [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject:[NSNumber numberWithInt:0]];
                         
@@ -316,6 +347,8 @@
             }
         }
     }
+    score++;
+    [self addNewNumbers];
     [self updateLabel];
 
 }
@@ -332,6 +365,7 @@
             index++;
         }
     }
+    self.scoreLabel.text = [NSString stringWithFormat:@"%i",score];
 
 }
 

@@ -10,10 +10,13 @@
 
 @interface ViewController : UIViewController
 @property(retain,nonatomic)IBOutletCollection(UILabel) NSArray * arrayOfLabels;
+@property(strong,nonatomic) NSMutableDictionary * imageToNum;
 - (IBAction)startGme:(id)sender;
 - (IBAction)print:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *scoreBest;
 - (IBAction)add:(id)sender;
 -(BOOL)movePossible;
+
 -(BOOL)endGame;
 @end

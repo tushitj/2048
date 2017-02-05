@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIImageView *gameLabel;
 @property(retain,nonatomic)IBOutletCollection(UILabel) NSArray * arrayOfLabels;
 @property(strong,nonatomic) NSMutableDictionary * imageToNum;
 - (IBAction)startGme:(id)sender;

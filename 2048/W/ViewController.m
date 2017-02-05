@@ -23,7 +23,7 @@
 int score;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [_gameLabel setImage:[UIImage imageNamed:@"og_image.png"]];
     _row1 = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
     _row2 = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
     _row3 = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
@@ -38,7 +38,7 @@ int score;
         
     }
     
-    NSLog(@"DONE***********");
+    //NSLog(@"DONE***********");
     
     [self updateLabel];
 
@@ -70,7 +70,7 @@ int score;
     
     }
     
-    NSLog(@"DONE***********");
+    //NSLog(@"DONE***********");
     
     [self updateLabel];
     
@@ -87,7 +87,7 @@ int score;
 -(int) randomCol{
     //NSUInteger value;
     int c = arc4random_uniform(3);
-    NSLog(@"IN random Column Function Value is %d" , c);
+    //NSLog(@"IN random Column Function Value is %d" , c);
     return c;
 
 }
@@ -95,7 +95,7 @@ int score;
 -(int) randomRow{
     //NSUInteger value;
     int r = arc4random_uniform(3);
-    NSLog(@"IN random Row Function Value is %d" , r);
+    //NSLog(@"IN random Row Function Value is %d" , r);
     return r;
     
 }
@@ -108,15 +108,19 @@ int score;
     else{
         value = 2 ;
     }
-    NSLog(@"IN random Function Value is %d" , value);
+   // NSLog(@"IN random Function Value is %d" , value);
     return value;
 }
 
 -(BOOL)isEmpty{
-    if(1 /* put the condition to check any 0 in the matrix*/)
-        return YES;
-    else
-        return NO;
+    for(int  i = 0; i<4 ; i++){
+        for(int j=0;j<4;j++){
+            if([_gameB[i][j] intValue] == 0)
+                return YES;
+            
+        }
+    }
+    return NO;
 }
 
 -(BOOL)movePossible{
@@ -128,7 +132,7 @@ int score;
 }
 
 -(BOOL)endGame{
-   if( [self isEmpty])
+   if(!([self movePossible] && [self isEmpty]))
        return YES;
    else
        return NO;
@@ -149,10 +153,10 @@ int score;
         }
     }
     int choice = arc4random_uniform((uint32_t)[emptySpacesX count]);
-    NSLog(@"Choice : %d" , choice);
+    //NSLog(@"Choice : %d" , choice);
     int x = [[emptySpacesX objectAtIndex:choice] intValue];
     int y = [[emptySpacesY objectAtIndex:choice] intValue];
-    NSLog(@"%d %d" , x,y);
+   // NSLog(@"%d %d" , x,y);
     [[_gameB objectAtIndex:x] replaceObjectAtIndex:y withObject: [NSNumber numberWithInt:[self randomValue]]];
     [self updateLabel];
     
@@ -160,11 +164,11 @@ int score;
 
 -(void)printArray{
     for(int i=0;i<4;i++){
-        NSLog(@"%@ %@ %@ %@" , _gameB[i][0],_gameB[i][1],_gameB[i][2],_gameB[i][3] );
-        NSLog(@"\n");
+       // NSLog(@"%@ %@ %@ %@" , _gameB[i][0],_gameB[i][1],_gameB[i][2],_gameB[i][3] );
+       // NSLog(@"\n");
     }
     
-    NSLog(@"DONE***********");
+    //NSLog(@"DONE***********");
 }
 
 
@@ -211,13 +215,14 @@ int score;
     
  //[self printArray];
     score++;
-    [self addNewNumbers];
+    if([self isEmpty])
+        [self addNewNumbers];
     [self updateLabel];
     
 }
 
 - (IBAction)downButton:(id)sender {
-    NSLog(@"Push Down Now");
+   // NSLog(@"Push Down Now");
     // [self addNewNumbers];
     BOOL alreadyCombined[4] = {NO,NO,NO,NO};
     for(int y = 0; y<4 ; y++){
@@ -256,14 +261,15 @@ int score;
         }
     }
     score++;
-    [self addNewNumbers];
+    if([self isEmpty])
+        [self addNewNumbers];
 [self updateLabel];
 }
 
 
 - (IBAction)rightButton:(id)sender {
     
-    NSLog(@"Push Right Now");
+  //  NSLog(@"Push Right Now");
     BOOL alreadyCombined[4] = {NO,NO,NO,NO};
     for(int x = 0; x<4 ; x++){
         for(int y = 3 ; y>-1  ; y-- ){
@@ -303,11 +309,12 @@ int score;
         }
     }
     score++;
-    [self addNewNumbers];
+    if([self isEmpty])
+        [self addNewNumbers];
     [self updateLabel];
 }
 - (IBAction)leftButton:(id)sender {
-    NSLog(@"Push Left Now");
+    //NSLog(@"Push Left Now");
     // [self addNewNumbers];
     BOOL alreadyCombined[4] = {NO,NO,NO,NO};
     for(int x = 0; x<4 ; x++){
@@ -348,7 +355,8 @@ int score;
         }
     }
     score++;
-    [self addNewNumbers];
+    if([self isEmpty])
+        [self addNewNumbers];
     [self updateLabel];
 
 }
@@ -361,7 +369,10 @@ int score;
         for(int j=0;j<4;j++){
             UILabel *label = (UILabel*)[self.arrayOfLabels objectAtIndex:index];
             int value = [_gameB[i][j] intValue];
-            [label setText:[NSString stringWithFormat:@"%d", value]];
+            if(value == 0)
+                [label setText:[NSString stringWithFormat:@""]];
+            else
+                [label setText:[NSString stringWithFormat:@"%d", value]];
             index++;
         }
     }

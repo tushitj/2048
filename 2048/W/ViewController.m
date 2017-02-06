@@ -20,9 +20,12 @@
 @end
 
 @implementation ViewController
+NSString * highScore;
 int score;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    highScore = [[NSUserDefaults standardUserDefaults] stringForKey:@"highScore"];
+    [self.highScore setText:highScore];
     [_gameLabel setImage:[UIImage imageNamed:@"og_image.png"]];
     _row1 = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
     _row2 = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0],[NSNumber numberWithInt:0], nil];
@@ -377,7 +380,14 @@ int score;
         }
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"%i",score];
-
+    int highScoreInt = [highScore intValue];
+    if(score>highScoreInt){
+        highScore = [NSString stringWithFormat:@"%d", score];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d" ,score] forKey:@"highScore"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        self.highScore.text = highScore;
+    }
+    
 }
 
 

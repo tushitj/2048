@@ -13,8 +13,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *gameLabel;
 @property(retain,nonatomic)IBOutletCollection(UILabel) NSArray * arrayOfLabels;
 @property(strong,nonatomic) NSMutableDictionary * imageToNum;
-- (IBAction)startGme:(id)sender;
-- (IBAction)print:(id)sender;
+//- (IBAction)startGme:(id)sender;
+//- (IBAction)print:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreBest;
 - (IBAction)add:(id)sender;
